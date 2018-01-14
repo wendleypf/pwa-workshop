@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="task">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Create task.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Task</title>
+    <link rel="apple-touch-icon" sizes="57x57" href="vendor/img/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="vendor/img/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="vendor/img/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="vendor/img/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="vendor/img/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="vendor/img/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="vendor/img/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="vendor/img/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="vendor/img/apple-icon-180x180.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="msapplication-TileColor" content="#FF9800">
+    <meta name="msapplication-TileImage" content="vendor/img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#FF9800">
+    <link rel="stylesheet" href="vendor/mdl/material.css">
+    <link rel="stylesheet" href="vendor/style.css">
+    <link rel="stylesheet" href="vendor/material.orange-blue.min.css" />
+    <link rel="stylesheet" href="vendor/dialog-polyfill/dialog-polyfill.min.css">
+    <link rel="stylesheet" href="vendor/mdl-select/getmdl-select.min.css">
+    <script type="text/javascript" src="vendor/mdl/material.js"></script>
+    <script type="text/javascript" src="vendor/dialog-polyfill/dialog-polyfill.js"></script>
+    <script type="text/javascript" src="vendor/mdl-select/getmdl-select.min.js"></script>
+</head>
+<body ng-controller="taskController">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+             mdl-layout--fixed-tabs">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Task</span>
+            </div>
+            <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+                <a href="#todo" class="mdl-layout__tab is-active">Todo</a>
+                <a href="#on_going" class="mdl-layout__tab">On Going</a>
+                <a href="#review" class="mdl-layout__tab">Review</a>
+                <a href="#done" class="mdl-layout__tab">Done</a>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Task</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="">
+                    <i class="material-icons">exit_to_app</i> Exit
+                </a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            <section class="mdl-layout__tab-panel is-active" id="todo">
+                <div class="page-content">
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone"></div>
+                        <div class="mdl-cell mdl-cell--10-col mdl-cell--10-col-tablet mdl-cell--10-col-phone">
+                            <div class="demo-list-action mdl-list">
+                                <h4 style="text-align: center;" ng-show="listTodo.length == 0">
+                                    No task registered !
+                                </h4>
+                                <div ng-show="listTodo.length > 0">
+                                    <div class="mdl-list__item" ng-class="{'high': task.priority == 'HIGH', 'average': task.priority == 'AVERAGE','low': task.priority == 'LOW'}" ng-repeat="task in listTodo track by $index">
+                                        <span class="mdl-list__item-primary-content">
+                                            <span>{{task.name}}</span>
+                                        </span>
+                                        <a class="mdl-list__item-secondary-action" href="" ng-click="deleteTask(task,$index)">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone"></div>
+                    </div>
+                </div>
+            </section>
+            <section class="mdl-layout__tab-panel" id="on_going">
+                <div class="page-content">
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone"></div>
+                        <div class="mdl-cell mdl-cell--10-col mdl-cell--10-col-tablet mdl-cell--10-col-phone">
+                            <div class="demo-list-action mdl-list">
+                                <h4 style="text-align: center;" ng-show="listOnGoing.length == 0">
+                                    No task registered !
+                                </h4>
+                                <div ng-show="listOnGoing.length > 0">
+                                    <div class="mdl-list__item" ng-class="{'high': task.priority == 'HIGH', 'average': task.priority == 'AVERAGE','low': task.priority == 'LOW'}" ng-repeat="task in listOnGoing track by $index">
+                                        <span class="mdl-list__item-primary-content">
+                                            <span>{{task.name}}</span>
+                                        </span>
+                                        <a class="mdl-list__item-secondary-action" href="#" ng-click="deleteTask(task,$index)">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone"></div>
+                    </div>
+                </div>
+            </section>
+            <section class="mdl-layout__tab-panel" id="review">
+                <div class="page-content">
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone"></div>
+                        <div class="mdl-cell mdl-cell--10-col mdl-cell--10-col-tablet mdl-cell--10-col-phone">
+                            <div class="demo-list-action mdl-list">
+                                <h4 style="text-align: center;" ng-show="listReview.length == 0">
+                                    No task registered !
+                                </h4>
+                                <div ng-show="listReview.length > 0">
+                                    <div class="mdl-list__item" ng-class="{'high': task.priority == 'HIGH', 'average': task.priority == 'AVERAGE','low': task.priority == 'LOW'}" ng-repeat="task in listReview track by $index">
+                                        <span class="mdl-list__item-primary-content">
+                                            <span>{{task.name}}</span>
+                                        </span>
+                                        <a class="mdl-list__item-secondary-action" href="" ng-click="deleteTask(task,$index)">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone"></div>
+                    </div>
+                </div>
+            </section>
+            <section class="mdl-layout__tab-panel" id="done">
+                <div class="page-content">
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone"></div>
+                        <div class="mdl-cell mdl-cell--10-col mdl-cell--10-col-tablet mdl-cell--10-col-phone">
+                            <div class="demo-list-action mdl-list">
+                                <h4 style="text-align: center;" ng-show="listDone.length == 0">
+                                    No task registered !
+                                </h4>
+                                <div ng-show="listDone.length > 0">
+                                    <div class="mdl-list__item" ng-class="{'high': task.priority == 'HIGH', 'average': task.priority == 'AVERAGE','low': task.priority == 'LOW'}" ng-repeat="task in listDone track by $index">
+                                        <span class="mdl-list__item-primary-content">
+                                            <span>{{task.name}}</span>
+                                        </span>
+                                        <a class="mdl-list__item-secondary-action" href="" ng-click="deleteTask(task,$index)">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent dialog-button"  id="view-source" data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons mdl-color-text--white" role="presentation">add</i>
+            <span class="visuallyhidden">add</span>
+            <span class="mdl-button__ripple-container">
+             <span class="mdl-ripple is-animating" style="width: 160.392px; height: 160.392px; transform: translate(-50%, -50%) translate(37px, 18px);"></span>
+            </span>
+        </button>
+        <dialog id="dialog" class="mdl-dialog">
+            <h5 class="mdl-dialog__title">Register Task</h5>
+            <div class="mdl-dialog__content">
+                <form name="registerTask">
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="text" id="name" ng-model="task.name" ng-required="true">
+                        <label class="mdl-textfield__label" for="name">Name</label>
+                        <span class="mdl-textfield__error">Name is required</span>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield getmdl-select">
+                        <input type="text" value="" class="mdl-textfield__input" id="priority" readonly ng-model="task.priority" ng-required="true">
+                        <input type="hidden" value="" name="priority">
+                        <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+                        <label for="priority" class="mdl-textfield__label">Priority</label>
+                        <ul for="priority" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                            <li class="mdl-menu__item" data-val="HIGH">HIGH</li>
+                            <li class="mdl-menu__item" data-val="AVERAGE">AVERAGE</li>
+                            <li class="mdl-menu__item" data-val="LOW">LOW</li>
+                        </ul>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield getmdl-select">
+                        <input type="text" value="" class="mdl-textfield__input" id="state" readonly ng-model="task.state" ng-required="true">
+                        <input type="hidden" value="" name="state">
+                        <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+                        <label for="state" class="mdl-textfield__label">State</label>
+                        <ul for="state" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                            <li class="mdl-menu__item" data-val="TODO">TODO</li>
+                            <li class="mdl-menu__item" data-val="ON_GOING">ON_GOING</li>
+                            <li class="mdl-menu__item" data-val="REVIEW">REVIEW</li>
+                            <li class="mdl-menu__item" data-val="DONE">DONE</li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button type="button" class="mdl-button close">Close</button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" ng-disabled="!registerTask.$valid" ng-click="saveTask(task)">Save</button>
+            </div>
+        </dialog>
+        <div id="toast" class="mdl-js-snackbar mdl-snackbar">
+            <div class="mdl-snackbar__text"></div>
+            <button class="mdl-snackbar__action" type="button"></button>
+        </div>
+        <script type="text/javascript" src="vendor/script.js"></script>
+        <script type="text/javascript" src="sw.js"></script>
+        <script type="text/javascript" src="vendor/jquery/jquery-1.12.4.min.js"></script>
+        <script type="text/javascript" src="vendor/angular/angular.js"></script>
+        <script type="text/javascript" src="app/app.js"></script>
+        <script type="text/javascript" src="app/task/task.service.js"></script>
+        <script type="text/javascript" src="app/task/task.controller.js"></script>
+    </div>
+</body>
+</html>
