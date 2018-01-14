@@ -1,9 +1,11 @@
 {
   "name": "Task",
-  "short_name": "Task",
-  "theme_color": "#FF9800",
-  "background_color": "#FFFFFF",
+  "short_name": "task",
+  "theme_color": "#ff9800",
+  "background_color": "#ffffff",
   "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/pwa-workshop/",
   "start_url": "/pwa-workshop/",
   "icons": [
     {

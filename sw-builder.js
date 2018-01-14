@@ -2,7 +2,7 @@ var CACHE_NAME = 'static-v1';
 var filesToCache = [
     '/index.html',
     '/sw.js',
-    '/vendor/script.js',
+    'vendor/script.js',
     '/vendor/material.orange-blue.min.css',
     '/app/app.js',
     '/app/app.routes.js',
