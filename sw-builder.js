@@ -5,8 +5,8 @@ var filesToCache = [
     '/pwa-workshop/sw.js',
     '/pwa-workshop/vendor/script.js',
     '/pwa-workshop/vendor/material.orange-blue.min.css',
+    '/pwa-workshop/vendor/font/materialicon.woff2',
     '/pwa-workshop/app/app.js',
-    '/pwa-workshop/app/app.routes.js',
     '/pwa-workshop/app/task/task.controller.js',
     '/pwa-workshop/app/task/task.service.js',
     '/pwa-workshop/vendor/angular/angular.js',
@@ -30,15 +30,17 @@ var filesToCache = [
     '/pwa-workshop/vendor/mdl-select/getmdl-select.min.js.map'
 ];
 
-self.addEventListener('install', function (event) {
+this.addEventListener('install', function (event) {
     console.log('install');
-    event.waitUntil(
+    event.waitUntil(function () {
         caches.open(CACHE_NAME).then(function (cache) {
             return cache.addAll(filesToCache);
-        }));
+        })
+    });
+
 });
 
-self.addEventListener('activate', function activator(event) {
+this.addEventListener('activate', function activator(event) {
     console.log('activate');
     event.waitUntil(
         caches.keys().then(function (keys) {
@@ -54,7 +56,7 @@ self.addEventListener('activate', function activator(event) {
     );
 });
 
-self.addEventListener('fetch', function (event) {
+this.addEventListener('fetch', function (event) {
     console.log('fetch');
     event.respondWith(
         caches.match(event.request).then(function (cachedResponse) {
