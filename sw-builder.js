@@ -1,5 +1,6 @@
 var CACHE_NAME = 'static-v1';
 var filesToCache = [
+    '/pwa-workshop/',
     '/pwa-workshop/index.html',
     '/pwa-workshop/sw.js',
     '/pwa-workshop/vendor/script.js',
